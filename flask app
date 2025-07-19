@@ -1,0 +1,51 @@
+from flask import Flask, request, send_from_directory, redirect, url_for, render_template_string
+import os
+
+app = Flask(__name__)
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+HTML_PAGE = '''
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Share</title>
+</head>
+<body>
+    <h2>Upload a file</h2>
+    <form method="POST" action="/" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+
+    <h2>Shared Files</h2>
+    <ul>
+        {% for file in files %}
+            <li><a href="{{ url_for('download_file', filename=file) }}">{{ file }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+'''
+
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        f = request.files['file']
+        if f:
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
+            return redirect(url_for('upload_file'))
+
+    files = os.listdir(app.config['UPLOAD_FOLDER'])
+    return render_template_string(HTML_PAGE, files=files)
+
+@app.route('/download/<filename>')
+def download_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+
+if __name__ == '__main__':
+    # Run on 0.0.0.0 to allow other devices to access it via IP
+    app.run(host='0.0.0.0', port=5000)
