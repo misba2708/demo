@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For Ayesha ❤️</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin-top: 100px;
+        }
+        h1 {
+            font-size: 50px;
+        }
+        p {
+            font-size: 22px;
+        }
+        .heart {
+            font-size: 60px;
+            animation: heartbeat 1s infinite;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .yes {
+            background-color: #ff4d6d;
+            color: white;
+        }
+        .no {
+            background-color: gray;
+            color: white;
+            position: absolute;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ayesha ❤️</h1>
+    <div class="heart">💖</div>
+
+    <p>
+        From the day I met you,<br>
+        My heart started running in an infinite loop 💕<br><br>
+        There is no break statement in my love for you ❤️<br><br>
+        Will you be the permanent variable of my life?
+    </p>
+
+    <h2>Will You Be Mine? 💍</h2>
+
+    <button class="yes" onclick="yesClicked()">YES 💖</button>
+    <button class="no" id="noBtn" onmouseover="moveButton()">NO 😜</button>
+
+    <script>
+        function yesClicked() {
+            alert("Yayyy ❤️ Ayesha, you just made my life beautiful! 💍✨");
+        }
+
+        function moveButton() {
+            var button = document.getElementById("noBtn");
+            var x = Math.random() * window.innerWidth;
+            var y = Math.random() * window.innerHeight;
+            button.style.left = x + "px";
+            button.style.top = y + "px";
+        }
+    </script>
+
+</body>
+</html>
